@@ -1,6 +1,5 @@
-#include <mlx.h>
-#include <stdio.h>
-#include <unistd.h>
+#include "lib.h"
+
 int	x1 = 50;
 int	y1 = 50;
 
@@ -9,40 +8,37 @@ typedef struct	s_data {
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
-	int		endian;
+	void	*mlx_win;
+	void	*mlx;
+	int		img_width;
+	int		img_height;
+	void	*img1;
+	void	*img2;
 }				t_data;
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	key_hook(int key, t_data *data)
 {
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (key == w)
+		mlx_destroy_image(data->mlx, data->img1);
+	else
+		mlx_destroy_image(data->mlx, data->img2);
+	data->img1 = mlx_xpm_file_to_image(data->mlx, relative_path, &data->img_width, &data->img_height);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img1, 120, 120);
 }
 
 int	main(void)
 {
 	int		x = 0;
 	int		y = 0;
-	void	*mlx_win;
-	void	*mlx;
-	t_data	img;
+	t_data	data;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 400, 400, "Hello world!");
-	img.img = mlx_new_image(mlx, 400, 400);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,&img.endian);
-	while (y <= y1)
-	{
-
-		my_mlx_pixel_put(&img, x, y, 0x00FFFFFF);
-		if (x == x1)
-		{
-			y++;
-			x = 0;
-		}
-		x++;
-	}
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	data.mlx = mlx_init();
+	data.mlx_win = mlx_new_window(data.mlx, 400, 400, "Hello world!");
+	data.img = mlx_new_image(data.mlx, 400, 400);
+	data.img1 = mlx_xpm_file_to_image(data.mlx, relative_path, &data.img_width, &data.img_height);
+	data.img2 = mlx_xpm_file_to_image(data.mlx, relative_path2, &data.img_width, &data.img_height);
+	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img1, 0, 0);
+	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img2, 60, 60);
+	mlx_key_hook(data.mlx_win, key_hook, &data);
+	mlx_loop(data.mlx);
 }
