@@ -2,8 +2,6 @@
 
 void    give_null_value(t_data *data)
 {
-    data->j = 0;
-    data->i = 0;
     data->mapinfo.wallsnumber = 0;
 	data->mapinfo.collnumber = 0;
 	data->mapinfo.doornumber = 0;

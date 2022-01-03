@@ -17,7 +17,7 @@ int	check_safety(t_data *data, int i)
 	else if (i == w)
 		i = -1*(data->imageinfo.x+1);
 	else if (i == s)
-		i = data->imageinfo.x+1;
+		i = (data->imageinfo.x+1);
 	else
 		return (0);
 	while (x < data->mapinfo.collnumber && data->mapinfo.collgot != data->mapinfo.collnumber)
@@ -109,33 +109,35 @@ int	check_safety1(t_data *data, int i)
 
 void    put_images(t_data *data, int key)
 {
-		if (key == d)
-		{
-				data->player.px = data->player.px+60;
-		data->mapinfo.player++;
-		}
-		else if (key == a)
-		{
-				data->player.px = data->player.px-60;
-		data->mapinfo.player--;
-		}
-		else if (key == s)
-		{
-				data->player.py = data->player.py+60;
-		data->mapinfo.player = 	data->mapinfo.player + data->imageinfo.x + 1;
-		}
-		else if (key == w)
-		{
-			data->player.py = data->player.py-60;
-		data->mapinfo.player = 	data->mapinfo.player - data->imageinfo.x - 1;
-		}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img2, data->player.px, data->player.py);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img2, data->player.px+60, data->player.py);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img3, data->player.px+60, data->player.py);
+	if (key == d)
+	{
+		data->player.px = data->player.px+60;
+		data->mapinfo.player++;
+	}
+	else if (key == a)
+	{
+		data->player.px = data->player.px-60;
+		data->mapinfo.player--;
+	}
+	else if (key == s)
+	{
+		data->player.py = data->player.py+60;
+		data->mapinfo.player = 	data->mapinfo.player + data->imageinfo.x + 1;
+	}
+	else if (key == w)
+	{
+		data->player.py = data->player.py-60;
+		data->mapinfo.player = 	data->mapinfo.player - data->imageinfo.x - 1;
+	}
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img2, data->player.px, data->player.py);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img3, data->player.px, data->player.py);
 }
 
 int	key_hook(int key, t_data *data)
 {
+	printf ("%d\n", data->mapinfo.doornumber);
+	printf ("%d\n", data->mapinfo.door[1]);
 	static int	i = 1;
 
 	if (key == d && check_safety(data, d) && check_safety1(data, 1))
@@ -145,7 +147,7 @@ int	key_hook(int key, t_data *data)
 	else if (key == s && check_safety(data, s) && check_safety1(data, (data->imageinfo.x+1)))
 				put_images(data, s);
 	else if (key == w && check_safety(data, w) && check_safety1(data, -1*(data->imageinfo.x+1)))
-				put_images(data, d);
+				put_images(data, w);
 	if (data->mapinfo.collgot == data->mapinfo.collnumber)
 		change_door(&*data);
 	return (1);

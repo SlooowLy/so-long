@@ -1,8 +1,9 @@
 #include "lib.h"
 
-int	check_numbers(t_data *data, int *j)
+int	check_numbers(t_data *data)
 {
 	int	i;
+	int	j;
 
 	j = 0;
 	i = 0;
@@ -21,6 +22,8 @@ int	check_numbers(t_data *data, int *j)
 		i++;
 	}
 	j++;
+	data->j = j;
+	return (i);
 }
 
 void	creat_images_window(t_data *data)
@@ -51,6 +54,7 @@ int	print_map2(t_data *data, int x, int y, int i)
 	}
 	else if (data->map[i] == 69)
 	{
+		printf ("%d\n", i);
 		data->mapinfo.door[data->mapinfo.doornumber++] = i;
 		mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img2, x, y);
 		mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img6, x, y);
@@ -87,12 +91,16 @@ int	main(void)
  	t_data	data;
 	int		x;
 	int		y;
+	int		fd;
 
 	x = 0;
 	y = 0;
-	read_map(&data.map, open ("map.txt", O_RDONLY));
+	data.i = 0;
+    data.j = 0;
+	fd = open ("map.txt", O_RDONLY);
+	read_map(&data.map, fd);
     give_null_value(&data);
-	data.i = check_numbers(&data, &data.j);
+	data.i = check_numbers(&data);
 	allocating(&data);
     give_null_value(&data);
 	data.mlx = mlx_init();
@@ -100,6 +108,6 @@ int	main(void)
 	data.imageinfo.y = data.j;
 	creat_images_window(&data);
 	print_map1(&data, x, y, 0);
-	mlx_key_hook(data.mlx_win, key_hook, &data);
+	mlx_hook(data.mlx_win, 2, 1L<<0, key_hook, &data);
 	mlx_loop(data.mlx);
 }
