@@ -3,13 +3,12 @@
 int	check_safety(t_data *data, int i)
 {
 	int	x;
-	char	*walls = data->mapinfo.walls;
-	char	*door = data->mapinfo.door;
-	char	*coll = data->mapinfo.coll;
+	int	*walls = data->mapinfo.walls;
+	int	*door = data->mapinfo.door;
+	int	*coll = data->mapinfo.coll;
 	int		player = data->mapinfo.player;
 
 	x = 0;
-	// printf ("%d\n", i);
 	if (i == d)
 		i = 1;
 	else if (i == a)
@@ -39,7 +38,28 @@ int	check_safety(t_data *data, int i)
 	return (1);
 }
 
-void	change_door(t_data *data)
+// void	change_player(t_data *data, int key)
+// {
+// 	static int	i;
+// 	int h;
+	
+// 	i = 3;
+// 	if (!data->player_eve)
+// 	{
+// 		if (i)
+// 		{
+// 			usleep (500000);
+// 			if (i % 2)
+// 				mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img_a, data->player.px, data->player.py);
+// 			else
+// 				mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img_evolved, data->player.px, data->player.py);
+// 			i--;
+// 			mlx_loop(mlx_init());
+// 		}
+// 	}
+// }
+
+void	change_door(t_data *data, int key)
 {
 	int	x = 0;
 	int	px = 0;
@@ -69,6 +89,7 @@ void	change_door(t_data *data)
 			n++;
 		x++;
 	}
+	// change_player(data, key);
 }
 
 void	destroy_all(t_data *data)
@@ -88,7 +109,7 @@ int	check_safety1(t_data *data, int i)
 {
 	int		x;
 	int		ret = 1;
-	char	*door = data->mapinfo.door;
+	int		*door = data->mapinfo.door;
 	int		player = data->mapinfo.player;
 
 	x = 0;
@@ -105,6 +126,18 @@ int	check_safety1(t_data *data, int i)
 		x++;
 	}
 	return (ret);
+}
+
+void player_animation(int key, t_data *data)
+{
+	if (key == d)
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img_d, data->player.px, data->player.py);
+	if (key == w)
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img_w, data->player.px, data->player.py);
+	if (key == a)
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img_a, data->player.px, data->player.py);
+	if (key == s)
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img_s, data->player.px, data->player.py);
 }
 
 void    put_images(t_data *data, int key)
@@ -131,13 +164,11 @@ void    put_images(t_data *data, int key)
 		data->mapinfo.player = 	data->mapinfo.player - data->imageinfo.x - 1;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img2, data->player.px, data->player.py);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->imgj.img3, data->player.px, data->player.py);
+	player_animation(key, data);
 }
 
 int	key_hook(int key, t_data *data)
 {
-	printf ("%d\n", data->mapinfo.doornumber);
-	printf ("%d\n", data->mapinfo.door[1]);
 	static int	i = 1;
 
 	if (key == d && check_safety(data, d) && check_safety1(data, 1))
@@ -149,6 +180,6 @@ int	key_hook(int key, t_data *data)
 	else if (key == w && check_safety(data, w) && check_safety1(data, -1*(data->imageinfo.x+1)))
 				put_images(data, w);
 	if (data->mapinfo.collgot == data->mapinfo.collnumber)
-		change_door(&*data);
+		change_door(&*data, key);
 	return (1);
 }

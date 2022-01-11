@@ -14,18 +14,22 @@
 #define w 13
 #define relative_path2 "./images/theopen.xpm"
 #define relative_path4 "./images/yummiw.xpm"
-#define relative_path3 "./images/khazixw.xpm"
+#define relative_kha_w "./images/khazix_w.xpm"
+#define relative_kha_a "./images/khazix_a.xpm"
+#define relative_kha_d "./images/khazix_d.xpm"
+#define relative_kha_s "./images/khazix_s.xpm"
+#define relative_kha_evolved "./images/khazix_eve.xpm"
 #define relative_path "./images/wall.xpm"
 #define relative_path5 "./images/openeddoor.xpm"
 #define relative_path6 "./images/closeddoor.xpm"
 
 typedef struct s_map
 {
-	char	*walls;
+	int	*walls;
 	int		wallsnumber;
-	char	*door;
+	int	*door;
 	int		doornumber;
-	char	*coll;
+	int	*coll;
 	int		collnumber;
 	int		player;
 	int		collgot;
@@ -35,7 +39,11 @@ typedef struct s_image
 {
 	void	*img1;
 	void	*img2;
-	void	*img3;
+	void	*img_d;
+	void	*img_w;
+	void	*img_evolved;
+	void	*img_a;
+	void	*img_s;
 	void	*img4;
 	void	*img5;
 	void	*img6;
@@ -67,6 +75,7 @@ typedef struct	s_data
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	int			player_eve;
     t_map		mapinfo;
 	t_image		imgj;
 	t_player	player;
@@ -134,6 +143,6 @@ int	    read_map(char **all, int fd);
 int 	key_hook(int key, t_data *data);
 void    give_null_value(t_data *data);
 void    allocating(t_data *data);
-
+int check_map(char *map);
 
 #endif
