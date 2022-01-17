@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitoual <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/15 20:10:31 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/01/15 20:10:34 by aaitoual         ###   ########.fr       */
+/*   Created: 2022/01/15 19:50:45 by aaitoual          #+#    #+#             */
+/*   Updated: 2022/01/15 19:51:30 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib.h"
 
-typedef struct s_var
+typedef struct s_yo
 {
 	int	i;
 	int	j;
@@ -21,16 +21,16 @@ typedef struct s_var
 	int	p;
 }		t_var;
 
-int	check_nextline(char *str)
+int	check_nextline(char *strr)
 {
 	int	i;
 	int	j;
 
 	j = 0;
 	i = 0;
-	while (str[i])
+	while (strr[i])
 	{
-		if (str[i] == '\n')
+		if (strr[i] == '\n')
 			j++;
 		i++;
 	}
@@ -51,7 +51,7 @@ int	check_map3(char **map)
 		while (map[i][j])
 		{
 			if (map[i][j] != 'E' && map[i][j] != '1' && map[i][j] != '0'
-			&& map[i][j] != 'P' && map[i][j] != 'C')
+			&& map[i][j] != 'P' && map[i][j] != 'C' && map[i][j] != 'X')
 				return (0);
 			j++;
 		}
@@ -91,8 +91,8 @@ int	check_map2(char **map)
 
 int	check_map(char **map_c, char *map)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map_c[i])

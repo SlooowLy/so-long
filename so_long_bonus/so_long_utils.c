@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitoual <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/15 20:16:08 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/01/15 20:16:09 by aaitoual         ###   ########.fr       */
+/*   Created: 2022/01/15 19:43:28 by aaitoual          #+#    #+#             */
+/*   Updated: 2022/01/15 19:43:29 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,14 @@ void	ft_free(char **str)
 	int	i;
 
 	i = 0;
-	if (str)
-	{
-		while (str[i])
-			free(str[i++]);
-		free (str);
-	}
+	while (str[i])
+		free(str[i++]);
+	free (str);
 }
 
 void	map_error(t_data *data)
 {
-	free (data->map_d);
-	ft_free(data->map);
+	(void) data;
 	write (1, "Map error\n", 11);
 	exit(0);
 }

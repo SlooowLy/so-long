@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitoual <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/15 20:14:50 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/01/15 20:14:51 by aaitoual         ###   ########.fr       */
+/*   Created: 2022/01/15 19:43:00 by aaitoual          #+#    #+#             */
+/*   Updated: 2022/01/15 19:43:02 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,20 @@ void	key_hook2(int key, t_data *m)
 {
 	if (key == a && check_safety(m, a) && check_safety1(m, a))
 	{
+		check_enemy(m, key);
 		put_images(m, a);
-		ft_printf_d(m->numberofmovements, 1);
 		m->numberofmovements++;
 	}
 	else if (key == s && check_safety(m, s) && check_safety1(m, s))
 	{
+		check_enemy(m, key);
 		put_images(m, s);
-		ft_printf_d(m->numberofmovements, 1);
 		m->numberofmovements++;
 	}
 	else if (key == w && check_safety(m, w) && check_safety1(m, w))
 	{
+		check_enemy(m, key);
 		put_images(m, w);
-		ft_printf_d(m->numberofmovements, 1);
 		m->numberofmovements++;
 	}
 }
@@ -91,15 +91,20 @@ void	key_hook2(int key, t_data *m)
 int	key_hook(int key, t_data *m)
 {
 	if (key == 53)
-		destroy_all(m);
+	{
+		m->message = 5;
+		ft_exit(m);
+	}
 	if (key == d && check_safety(m, d) && check_safety1(m, d))
 	{
+		check_enemy(m, key);
 		put_images(m, d);
-		ft_printf_d(m->numberofmovements, 1);
 		m->numberofmovements++;
 	}
 	key_hook2(key, m);
 	if (m->mapinfo.collgot == m->mapinfo.collnumber)
+	{
 		m->im.i6 = mlx_xpm_file_to_image(m->ml, r5, &m->wt, &m->hg);
+	}
 	return (1);
 }

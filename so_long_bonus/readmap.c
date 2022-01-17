@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitoual <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/15 20:15:53 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/01/15 20:15:55 by aaitoual         ###   ########.fr       */
+/*   Created: 2022/01/15 19:43:13 by aaitoual          #+#    #+#             */
+/*   Updated: 2022/01/15 19:43:14 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,37 @@ int	read_map(char **all, int fd)
 	}
 	free (curr);
 	return (1);
+}
+
+int	get_r(void)
+{
+	// time_t	t1;
+
+	// srand ((unsigned)time(&t1));
+	return ((rand() % 4) + 1);
+}
+
+void	change_player_next_position(t_data *data, int j, int k, int r)
+{
+	if (r == 1)
+		data->map[j][k + 1] = 'X';
+	if (r == 2)
+		data->map[j][k - 1] = 'X';
+	if (r == 3)
+		data->map[j + 1][k] = 'X';
+	if (r == 4)
+		data->map[j - 1][k] = 'X';
+}
+
+char	f_u_25line(t_data *m, int r, int j, int k)
+{
+	if (r == 1)
+		return (m->map[j][k + 1]);
+	if (r == 2)
+		return (m->map[j][k - 1]);
+	if (r == 3)
+		return (m->map[j + 1][k]);
+	if (r == 4)
+		return (m->map[j - 1][k]);
+	return (0);
 }

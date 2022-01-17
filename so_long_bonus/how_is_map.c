@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
+/*   how_is_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitoual <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/15 20:10:31 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/01/15 20:10:34 by aaitoual         ###   ########.fr       */
+/*   Created: 2022/01/15 19:50:25 by aaitoual          #+#    #+#             */
+/*   Updated: 2022/01/15 19:50:28 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_map3(char **map)
 		while (map[i][j])
 		{
 			if (map[i][j] != 'E' && map[i][j] != '1' && map[i][j] != '0'
-			&& map[i][j] != 'P' && map[i][j] != 'C')
+			&& map[i][j] != 'P' && map[i][j] != 'C' && map[i][j] != 'X')
 				return (0);
 			j++;
 		}
@@ -91,8 +91,8 @@ int	check_map2(char **map)
 
 int	check_map(char **map_c, char *map)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map_c[i])
