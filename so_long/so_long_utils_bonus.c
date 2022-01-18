@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaitoual <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/15 20:16:08 by aaitoual          #+#    #+#             */
-/*   Updated: 2022/01/15 20:16:09 by aaitoual         ###   ########.fr       */
+/*   Created: 2022/01/15 19:43:28 by aaitoual          #+#    #+#             */
+/*   Updated: 2022/01/15 19:43:29 by aaitoual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib.h"
+#include "lib_bonus.h"
 
 int	len(char *str)
 {
@@ -59,12 +59,9 @@ void	ft_free(char **str)
 	int	i;
 
 	i = 0;
-	if (str)
-	{
-		while (str[i])
-			free(str[i++]);
-		free (str);
-	}
+	while (str[i])
+		free(str[i++]);
+	free (str);
 }
 
 void	map_error(t_data *data)

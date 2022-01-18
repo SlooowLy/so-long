@@ -1,39 +1,35 @@
-CC = cc
+NAME = so_long
 
-NAME = so_long.a
+CC = gcc
 
-FLAGS = -Wall -Wextra -Werror
 
-MLX = -Lminilibx -lmlx -framework OpenGL -framework AppKit
+FLAGS = -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit
 
-SRC_FILES = check_map.c check_map.c check_map.c ft_split.c ft_strncmp.c key_hook_utils_2.c key_hook_utils.c key_hook.c printf_d.c readmap.c so_long_utils_2.c so_long_utils.c so_long.c \
+SRC = src/check_map.c src/ft_exit.c src/ft_itoa.c src/ft_split.c src/ft_strncmp.c src/key_hook.c src/key_hook_utils.c src/key_hook_utils_2.c src/printf_d.c src/readmap.c src/so_long.c src/so_long_utils.c src/so_long_utils_2.c
 
-SRCB_FILES = ft_exit.c ft_split.c ft_strncmp.c how_is_map.c itoa.c key_hook_utils_2.c key_hook_utils.c key_hook.c map.c readmap.c so_long_utils.c so_long_utils.c so_long.c \
+BONUS = itoa.c map.c ft_exit.c ft_split.c ft_strncmp.c key_hook.c key_hook_utils.c key_hook_utils_2.c readmap.c so_long.c so_long_utils.c so_long_utils_2.c
 
-SRC = $(addprefix ./so_long/, $(SRC_FILES))
-SRCB = $(addprefix ./so_long_bonus/, $(SRCB_FILES))
+SRCB = $(addprefix ./bonus/, $(BONUS))
 
 OBJS = $(SRC:.c=.o)
-OBJBS = $(SRCB:.c=.o)
+OBJS = $(SRCB:.c=.o)
+
+%.o: %.c
+	$(CC) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rc $(NAME) $(OBJS)
+	$(CC) $(FLAGS) $(OBJS) -o so_long
 
-bonus: $(OBJBS) $(MLX_LIB) $(FT_LIB)
-	ar rc $(NAME) $(OBJBS)
-	$(CC) $(FLAGS) $(NAME) $(FT_LIB) $(MLX_LIB) $(MLX) -lz -o solong
-
-%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+bonus: $(OBJBS)
+	$(CC) $(FLAGS) $(OBJBS) -o yo
 
 clean:
 	rm -f $(OBJS) $(OBJBS)
 
 fclean: clean
-	rm -f $(NAME)
-	rm -f so_long
 	rm -f $(OBJS) $(OBJBS)
+	rm -f $(NAME)
 
 re: fclean all
