@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "lib.h"
+#include <stdio.h>
 
 int	render_next_frame(t_data *m)
 {
@@ -47,9 +48,19 @@ void	give_value(t_data *data)
 
 void	map_message(t_data *data)
 {
+	if (!(data->map))
+		map_error(data);
 	if (!check_map(data->map, data->map_d))
 		map_error(data);
 	if (!(len(data->map_d)))
+		map_error(data);
+}
+
+void	check_map_error(int i, t_data *data)
+{
+	if (i == 0)
+		map_error(data);
+	if (i == 2)
 		map_error(data);
 }
 
@@ -65,8 +76,8 @@ int	main(int ac, char **av)
 	fd = open (av[1], O_RDONLY);
 	if (fd == -1)
 		map_error(&data);
-	data.map_d = NULL;
-	read_map(&data.map_d, fd);
+	fd = read_map(&data.map_d, fd);
+	check_map_error(fd, &data);
 	give_value(&data);
 	data.map = ft_split(data.map_d, '\n');
 	map_message(&data);

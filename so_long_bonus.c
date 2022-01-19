@@ -74,6 +74,14 @@ int	render_next_frame(t_data *m)
 	return (1);
 }
 
+void	check_map_error(int i, t_data *data)
+{
+	if (i == 0)
+		map_error(data);
+	if (i == 2)
+		map_error(data);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -89,7 +97,8 @@ int	main(int ac, char **av)
 	fd = open (av[1], O_RDONLY);
 	if (fd == -1)
 		map_error(&data);
-	read_map(&data.map_d, fd);
+	fd = read_map(&data.map_d, fd);
+	check_map_error(fd, &data);
 	data.map = ft_split(data.map_d, '\n');
 	map_message(&data);
 	give_value(&data);

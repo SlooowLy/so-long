@@ -1,6 +1,6 @@
 NAME = so_long
 
-CC = gcc
+CC = cc
 
 FLAGS = -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit
 
@@ -11,14 +11,14 @@ BONUS = itoa_bonus.c map_bonus.c ft_exit_bonus.c ft_split_bonus.c ft_strncmp_bon
 OBJS = $(SRC:.c=.o)
 OBJBS = $(BONUS:.c=.o)
 
-%.o: %.c
+%.o: %.c lib.h
 	$(CC) -c $< -o $@
 
 all: $(NAME) 
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(OBJS) -o so_long
-bonus: $(OBJBS) $(OBJS)
+bonus: $(OBJBS) $(OBJS) lib_bonus.h
 	$(CC) $(FLAGS) $(OBJBS) -o so_long_bonus
 	$(CC) $(FLAGS) $(OBJS) -o so_long
 

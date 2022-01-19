@@ -49,16 +49,17 @@ int	read_map(char **all, int fd)
 	while (i == 0 && j != 0)
 	{
 		j = read(fd, curr, 1);
+		if (curr[0] != 'P' && curr[0] != 'E' && curr[0] != 'C'
+			&& curr[0] != '0' && curr[0] != '1')
+			return (2);
 		if (j == -1)
-		{
-			free (curr);
-			return (0);
-		}
+			break ;
 		if (j == 0)
 			break ;
 		curr[j] = '\0';
 		*all = ft_strjoin(*all, curr);
 	}
-	free (curr);
+	if (j != -1)
+		free (curr);
 	return (1);
 }
